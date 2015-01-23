@@ -153,6 +153,13 @@ Steps
       :language: html
       :linenos:
 
+#. Need a template to render all parents at 
+   ``sqladdcontent/tutorial/templates/breadcrumbs.jinja2``:
+
+   .. literalinclude:: sqladdcontent/tutorial/templates/breadcrumbs.jinja2
+      :language: html
+      :linenos:
+
 #. Need a view template for ``folder`` at
    ``sqladdcontent/tutorial/templates/folder.jinja2``:
 
