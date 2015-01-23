@@ -54,6 +54,18 @@ Steps
    .. literalinclude:: sqladdcontent/tutorial/models.py
       :linenos:
 
+#. ``sqladdcontent/tutorial/__init__.py`` needs to import classes from
+   ``sqladdcontent/tutorial/sqltraversal.py``:
+
+   .. literalinclude:: sqladdcontent/tutorial/__init__.py
+      :linenos:
+
+#. Initialization script ``sqladdcontent/tutorial/initialize_db.py``
+   is also changed :
+
+   .. literalinclude:: sqladdcontent/tutorial/initialize_db.py
+      :linenos:
+
 #. Our ``sqladdcontent/tutorial/views.py`` is almost unchanged from the
    version in the ``addcontent`` step:
 
@@ -128,3 +140,4 @@ the code for your business objects and ignore the the Pyramid part.
 This is most useful for projects starting with a blank slate,
 with no existing data or schemas they have to adhere to. Retrofitting a
 tree on non-tree data is possible, but harder.
+
