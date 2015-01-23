@@ -66,6 +66,72 @@ Steps
    .. literalinclude:: sqladdcontent/tutorial/initialize_db.py
       :linenos:
 
+#. Delete existing database and produce a new database.
+
+   .. code-block:: bash
+   rm sqltutorial.sqlite
+   $ $VENV/bin/initialize_tutorial_db development.ini
+
+   2015-01-23 19:29:36,398 INFO  [sqlalchemy.engine.base.Engine][MainThread] SELECT CAST('test plain returns' AS VARCHAR(60)) AS anon_1
+   2015-01-23 19:29:36,398 INFO  [sqlalchemy.engine.base.Engine][MainThread] ()
+   2015-01-23 19:29:36,399 INFO  [sqlalchemy.engine.base.Engine][MainThread] SELECT CAST('test unicode returns' AS VARCHAR(60)) AS anon_1
+   2015-01-23 19:29:36,399 INFO  [sqlalchemy.engine.base.Engine][MainThread] ()
+   2015-01-23 19:29:36,400 INFO  [sqlalchemy.engine.base.Engine][MainThread] PRAGMA table_info("node")
+   2015-01-23 19:29:36,400 INFO  [sqlalchemy.engine.base.Engine][MainThread] ()
+   2015-01-23 19:29:36,400 INFO  [sqlalchemy.engine.base.Engine][MainThread] PRAGMA table_info("document")
+   2015-01-23 19:29:36,400 INFO  [sqlalchemy.engine.base.Engine][MainThread] ()
+   2015-01-23 19:29:36,401 INFO  [sqlalchemy.engine.base.Engine][MainThread] PRAGMA table_info("folder")
+   2015-01-23 19:29:36,401 INFO  [sqlalchemy.engine.base.Engine][MainThread] ()
+   2015-01-23 19:29:36,402 INFO  [sqlalchemy.engine.base.Engine][MainThread] 
+   CREATE TABLE node (
+         id INTEGER NOT NULL, 
+         name VARCHAR(50) NOT NULL, 
+         parent_id INTEGER, 
+         type VARCHAR(50), 
+         PRIMARY KEY (id), 
+         FOREIGN KEY(parent_id) REFERENCES node (id)
+   )
+
+
+   2015-01-23 19:29:36,402 INFO  [sqlalchemy.engine.base.Engine][MainThread] ()
+   2015-01-23 19:29:36,406 INFO  [sqlalchemy.engine.base.Engine][MainThread] COMMIT
+   2015-01-23 19:29:36,407 INFO  [sqlalchemy.engine.base.Engine][MainThread] 
+   CREATE TABLE document (
+         id INTEGER NOT NULL, 
+         title TEXT, 
+         PRIMARY KEY (id), 
+         FOREIGN KEY(id) REFERENCES node (id)
+   )
+
+
+   2015-01-23 19:29:36,407 INFO  [sqlalchemy.engine.base.Engine][MainThread] ()
+   2015-01-23 19:29:36,411 INFO  [sqlalchemy.engine.base.Engine][MainThread] COMMIT
+   2015-01-23 19:29:36,412 INFO  [sqlalchemy.engine.base.Engine][MainThread] 
+   CREATE TABLE folder (
+         id INTEGER NOT NULL, 
+         title TEXT, 
+         PRIMARY KEY (id), 
+         FOREIGN KEY(id) REFERENCES node (id)
+   )
+
+
+   2015-01-23 19:29:36,412 INFO  [sqlalchemy.engine.base.Engine][MainThread] ()
+   2015-01-23 19:29:36,416 INFO  [sqlalchemy.engine.base.Engine][MainThread] COMMIT
+   2015-01-23 19:29:36,427 INFO  [sqlalchemy.engine.base.Engine][MainThread] BEGIN (implicit)
+   2015-01-23 19:29:36,428 INFO  [sqlalchemy.engine.base.Engine][MainThread] INSERT INTO node (name, parent_id, type) VALUES (?, ?, ?)
+   2015-01-23 19:29:36,428 INFO  [sqlalchemy.engine.base.Engine][MainThread] ('', None, 'folder')
+   2015-01-23 19:29:36,429 INFO  [sqlalchemy.engine.base.Engine][MainThread] INSERT INTO folder (id, title) VALUES (?, ?)
+   2015-01-23 19:29:36,429 INFO  [sqlalchemy.engine.base.Engine][MainThread] (1, 'My SQLTraversal Root')
+   2015-01-23 19:29:36,430 INFO  [sqlalchemy.engine.base.Engine][MainThread] INSERT INTO node (name, parent_id, type) VALUES (?, ?, ?)
+   2015-01-23 19:29:36,430 INFO  [sqlalchemy.engine.base.Engine][MainThread] ('f1', 1, 'folder')
+   2015-01-23 19:29:36,430 INFO  [sqlalchemy.engine.base.Engine][MainThread] INSERT INTO folder (id, title) VALUES (?, ?)
+   2015-01-23 19:29:36,431 INFO  [sqlalchemy.engine.base.Engine][MainThread] (2, 'Folder 1')
+   2015-01-23 19:29:36,431 INFO  [sqlalchemy.engine.base.Engine][MainThread] INSERT INTO node (name, parent_id, type) VALUES (?, ?, ?)
+   2015-01-23 19:29:36,432 INFO  [sqlalchemy.engine.base.Engine][MainThread] ('da', 2, 'document')
+   2015-01-23 19:29:36,432 INFO  [sqlalchemy.engine.base.Engine][MainThread] INSERT INTO document (id, title) VALUES (?, ?)
+   2015-01-23 19:29:36,433 INFO  [sqlalchemy.engine.base.Engine][MainThread] (3, 'Document A')
+   2015-01-23 19:29:36,433 INFO  [sqlalchemy.engine.base.Engine][MainThread] COMMIT
+
 #. Our ``sqladdcontent/tutorial/views.py`` is almost unchanged from the
    version in the ``addcontent`` step:
 
